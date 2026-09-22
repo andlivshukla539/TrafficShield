@@ -1,0 +1,79 @@
+# ─── Premium Rate Limiter — Helm Values ─────────────────────────────────────
+# Override these values in your own values.yaml or via --set flags.
+
+# Application settings
+replicaCount: 2
+
+image:
+  repository: andlivshukla539/premium-rate-limiter
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 5000
+
+# Rate limiter configuration (injected as environment variables)
+rateLimit:
+  algorithm: token_bucket
+  rps: 10
+  windowSize: 10
+
+# JWT Secret (override in production!)
+auth:
+  jwtSecret: "change-me-in-production"
+
+# Redis connection (when using Bitnami Redis subchart)
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      size: 1Gi
+
+# Custom Redis (when NOT using the subchart)
+externalRedis:
+  host: ""
+  port: 6379
+  password: ""
+
+# Horizontal Pod Autoscaler
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# Resource limits
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+# Ingress (optional)
+ingress:
+  enabled: false
+  className: nginx
+  annotations: {}
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: rate-limiter.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+    # - secretName: rate-limiter-tls
+    #   hosts:
+    #     - rate-limiter.example.com
+
+# Node selector, tolerations, affinity
+nodeSelector: {}
+tolerations: []
+affinity: {}

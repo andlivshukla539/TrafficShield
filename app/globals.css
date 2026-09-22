@@ -1,0 +1,287 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TrafficShield — Design System (Black & White Premium Theme)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* Backgrounds */
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #080808;
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-surface-hover: rgba(255, 255, 255, 0.06);
+  --color-surface-active: rgba(255, 255, 255, 0.08);
+
+  /* Borders */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.15);
+  --color-border-active: rgba(255, 255, 255, 0.25);
+
+  /* Accent Colors — Monochrome Palette */
+  --color-accent-primary: #ffffff;
+  --color-accent-primary-glow: rgba(255, 255, 255, 0.25);
+  --color-accent-secondary: #a0a0a0;
+  --color-accent-secondary-glow: rgba(160, 160, 160, 0.2);
+  --color-success: #c8c8c8;
+  --color-success-glow: rgba(200, 200, 200, 0.2);
+  --color-danger: #666666;
+  --color-danger-glow: rgba(102, 102, 102, 0.2);
+  --color-warning: #b0b0b0;
+  --color-warning-glow: rgba(176, 176, 176, 0.2);
+
+  /* Text */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #8b8b8b;
+  --color-text-muted: #4a4a4a;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Shadows */
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glass-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-glow-primary: 0 0 24px rgba(255, 255, 255, 0.15);
+  --shadow-glow-secondary: 0 0 24px rgba(160, 160, 160, 0.15);
+
+  /* shadcn/ui compatible tokens */
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-card: rgba(255, 255, 255, 0.03);
+  --color-card-foreground: #ffffff;
+  --color-popover: #080808;
+  --color-popover-foreground: #ffffff;
+  --color-primary: #ffffff;
+  --color-primary-foreground: #000000;
+  --color-secondary: #a0a0a0;
+  --color-secondary-foreground: #000000;
+  --color-muted: #141414;
+  --color-muted-foreground: #8b8b8b;
+  --color-accent: rgba(255, 255, 255, 0.06);
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #666666;
+  --color-destructive-foreground: #ffffff;
+  --color-input: rgba(255, 255, 255, 0.08);
+  --color-ring: rgba(255, 255, 255, 0.3);
+  --radius: 12px;
+}
+
+/* ─── Global Reset ──────────────────────────────────────────────────────── */
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.5;
+}
+
+/* ─── Animated Ambient Background ──────────────────────────────────────── */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 85% 20%, rgba(255, 255, 255, 0.015) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 50% 85%, rgba(255, 255, 255, 0.01) 0%, transparent 60%);
+  z-index: 0;
+  pointer-events: none;
+  animation: ambientShift 25s ease-in-out infinite alternate;
+}
+
+@keyframes ambientShift {
+  0%   { opacity: 1; transform: scale(1); }
+  50%  { opacity: 0.7; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Glass Card ────────────────────────────────────────────────────────── */
+
+.glass-card {
+  background: var(--color-surface);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-glass);
+  transition:
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--color-border-hover);
+}
+
+/* ─── Gradient Text ─────────────────────────────────────────────────────── */
+
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff, #888888);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-warm {
+  background: linear-gradient(135deg, #c0c0c0, #606060);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ─── Glow Effects ──────────────────────────────────────────────────────── */
+
+.glow-primary { text-shadow: 0 0 12px rgba(255, 255, 255, 0.25); }
+.glow-secondary { text-shadow: 0 0 12px rgba(160, 160, 160, 0.2); }
+.glow-success { text-shadow: 0 0 12px rgba(200, 200, 200, 0.2); }
+.glow-danger { text-shadow: 0 0 12px rgba(102, 102, 102, 0.2); }
+
+/* ─── Gradient Button ───────────────────────────────────────────────────── */
+
+.btn-gradient {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff, #a0a0a0);
+  border: none;
+  border-radius: var(--radius-md);
+  color: #000000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-gradient:hover::before {
+  left: 100%;
+}
+
+.btn-gradient:hover {
+  box-shadow: var(--shadow-glow-primary);
+  transform: translateY(-1px);
+}
+
+.btn-gradient:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ─── Status Pulse ──────────────────────────────────────────────────────── */
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.75); }
+}
+
+.status-pulse {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* ─── Feed Slide In ─────────────────────────────────────────────────────── */
+
+@keyframes feedSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.feed-slide-in {
+  animation: feedSlideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Range Slider ──────────────────────────────────────────────────────── */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffffff, #a0a0a0);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+}
+
+/* ─── Three.js Canvas ───────────────────────────────────────────────────── */
+
+.three-canvas {
+  position: fixed !important;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── Noise Overlay ─────────────────────────────────────────────────────── */
+
+.noise-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.02;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+}

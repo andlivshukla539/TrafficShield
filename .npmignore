@@ -1,0 +1,38 @@
+# ─── NPM Publish Exclusions ─────────────────────────────────────────────────
+# Only lib/ is published to NPM. Everything else is excluded.
+
+# SaaS Server
+server/
+
+# Dashboard Frontend
+dashboard/
+public/
+
+# Infrastructure
+charts/
+gateway/
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Development
+src/
+tests/
+examples/
+algorithms/
+data/
+
+# Legacy V1 files
+server.js
+script.js
+
+# Config & CI
+.github/
+.env
+.env.example
+.gitignore
+nodemon.json
+
+# Documentation (users can find it on GitHub)
+*.md
+!README.md

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  labels:
+    app: {{ .Release.Name }}
+data:
+  RATE_LIMIT_ALGORITHM: "{{ .Values.rateLimit.algorithm }}"
+  RATE_LIMIT_RPS: "{{ .Values.rateLimit.rps }}"
+  RATE_LIMIT_WINDOW_SIZE: "{{ .Values.rateLimit.windowSize }}"

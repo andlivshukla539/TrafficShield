@@ -1,0 +1,58 @@
+# ─── Premium Rate Limiter — API Gateway Configuration ───────────────────────
+# This file configures routes, rate limits, and security rules for the gateway.
+# Supports hot-reload: changes are applied without restarting the server.
+
+server:
+  port: 8080
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+
+# ─── Security Rules (Applied Globally) ──────────────────────────────────────
+security:
+  # IPs that are always blocked (Redis-backed, manageable via API)
+  ipBlacklist: []
+
+  # IPs that always bypass security checks
+  ipWhitelist:
+    - 127.0.0.1
+
+  # ISO 3166-1 alpha-2 country codes to block
+  blockedCountries: []
+
+  # Enable/disable bot detection
+  botDetection: true
+
+  # Auto-ban repeat offenders
+  ddosProtection:
+    enabled: true
+    maxViolations: 10       # Max rate limit violations before auto-ban
+    trackingWindow: 60      # Tracking window in seconds
+    banDuration: 86400      # Ban duration in seconds (24 hours)
+
+# ─── Route Definitions ──────────────────────────────────────────────────────
+# Each route maps an incoming path to a backend target.
+# Rate limits and security rules can be configured per-route.
+
+routes:
+  - path: /api/users
+    target: http://localhost:3001
+    rateLimit:
+      algorithm: token_bucket
+      rps: 20
+      windowSize: 10
+
+  - path: /api/payments
+    target: http://localhost:3002
+    rateLimit:
+      algorithm: sliding_window_counter
+      rps: 5
+      windowSize: 60
+
+  - path: /api/search
+    target: http://localhost:3003
+    rateLimit:
+      algorithm: fixed_window
+      rps: 30
+      windowSize: 10

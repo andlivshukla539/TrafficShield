@@ -1,0 +1,51 @@
+# ─── Production Docker Compose (Next.js) ───────────────────────────────────
+
+services:
+  # Next.js Full Stack App
+  web-app:
+    build: .
+    container_name: rate-limiter-nextjs
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - REDIS_HOST=rate-limiter-redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=docker-compose-jwt-secret-change-in-production
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    volumes:
+      - app-data:/app/data
+    depends_on:
+      redis-cache:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+
+  # Redis Cache with persistence
+  redis-cache:
+    image: redis:7-alpine
+    container_name: rate-limiter-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      start_period: 5s
+      retries: 5
+
+volumes:
+  redis-data:
+    driver: local
+  app-data:
+    driver: local

@@ -1,0 +1,85 @@
+{
+  "name": "@andliv/rate-limiter",
+  "version": "3.0.0",
+  "description": "Production-grade distributed rate limiting toolkit with 5 algorithms, WAF security, API gateway, SaaS dashboard, and Kubernetes integration",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./algorithms": "./lib/algorithms/index.js",
+    "./middleware": "./lib/middleware/rateLimiter.js",
+    "./security": {
+      "import": "./lib/security/ipFilter.js",
+      "require": "./lib/security/ipFilter.js"
+    }
+  },
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "start:legacy": "node src/server.js",
+    "dev:legacy": "nodemon src/server.js",
+    "start:gateway": "node examples/gateway-usage.js",
+    "test:load": "k6 run tests/load-test.js"
+  },
+  "keywords": [
+    "rate-limiter",
+    "rate-limiting",
+    "express-middleware",
+    "token-bucket",
+    "leaky-bucket",
+    "sliding-window",
+    "redis",
+    "api-gateway",
+    "waf",
+    "ddos-protection",
+    "bot-detection",
+    "ip-filter",
+    "geo-blocking"
+  ],
+  "author": "andlivshukla539",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andlivshukla539/premium-rate-limiter.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "bcryptjs": "^2.4.3",
+    "chart.js": "^4.5.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "framer-motion": "^12.41.0",
+    "geoip-lite": "^1.4.10",
+    "gsap": "^3.15.0",
+    "http-proxy-middleware": "^3.0.3",
+    "ioredis": "^5.4.1",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^1.21.0",
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^19.2.7",
+    "resend": "^6.14.0",
+    "tailwind-merge": "^3.6.0",
+    "three": "^0.176.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.1",
+    "nodemon": "^3.1.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.1"
+  }
+}

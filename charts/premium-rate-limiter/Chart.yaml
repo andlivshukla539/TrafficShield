@@ -1,0 +1,14 @@
+apiVersion: v2
+name: premium-rate-limiter
+description: A Helm chart for deploying the Premium Distributed Rate Limiter
+type: application
+version: 1.0.0
+appVersion: "3.0.0"
+maintainers:
+  - name: Andliv Shukla
+    url: https://github.com/andlivshukla539
+dependencies:
+  - name: redis
+    version: "18.x.x"
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
